@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "expresspostgre2023",
+    "database": "e-commerce",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "expresspostgre2023",
+    "database": "e-commerce",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "expresspostgre2023",
+    "database": "e-commerece",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
