@@ -1,8 +1,8 @@
-# e-commerece-backend-express/postgresql
+# eCommerce-backend
 
 ## Description
 
-This project is an eCommerce API built with Express.js, PostgreSQL, and Sequelize. It provides a boilerplate for creating an eCommerce backend with features like user registration and authentication, product management, cart management, and order management.
+This project is an eCommerce-backend built with Express.js, PostgreSQL, and Sequelize. It provides a boilerplate for creating an eCommerce backend with features like user registration and authentication, product management, cart management, and order management.
 
 ## Technologies Used
 
@@ -10,20 +10,21 @@ This project is an eCommerce API built with Express.js, PostgreSQL, and Sequeliz
 * node js - version 18.13.0
 * nodemon - version 2.0.22
 * express - version 4.18.2
-* cors - version 2.8.5,
-* dotenv - version 16.0.3,
+* cors - version 2.8.5
+* dotenv - version 16.0.3
 * jsonwebtoken - version 9.0.0
 * express-validator - version 7.0.1
 * nodemailer - version 6.9.2
 * multer - version 1.4.5-lts.1
 * pg - version 8.10.0
-* sequelize - version 6.31.1,
-* sequelize - version 6.6.0,
+* sequelize - version 6.31.1
+* sequelize - version 6.6.0
 * stripe - version 12.8.0
 
 ### Database
 * pg - version 8.10.0
-* pg-hstore version 2.3.4,
+* pg-hstore version 2.3.4
+* 
 ## Features
 
 * User registration and login
