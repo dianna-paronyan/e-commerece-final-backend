@@ -1,5 +1,4 @@
 # e-commerece-backend-express/postgresql
-# ExpresJS/MongoDB API
 
 ## Description
 
@@ -49,8 +48,8 @@ npm install
 
 To test the application
 
-* Install PostgreSQL database and create a new database for the project.
-* ```npx sequelize-cli db:create```
+* Install PostgreSQL database and create a new database for the project:
+ ```npx sequelize-cli db:create```
 * Update the database credentials in the config/config.js file.
 * Run database migrations to create the required tables:
 ```npx sequelize-cli db:migrate```
@@ -82,9 +81,3 @@ nodemon server.js
 * If you get 200 OK and {"products": []} as a result, everything was successul
 * From there you can edit the app based on your needs
 * If you want to seed your product database with some random information, run node post_seed.js in the seeds folder, click "y" to delete all previous recrods or anything else to just add data without deleting anything
-## Authors
-
-Contributors names and contact info
-Feel free to contribute to the project
-
-ex. dianna-paronyan  
