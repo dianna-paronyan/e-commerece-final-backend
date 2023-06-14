@@ -80,5 +80,6 @@ nodemon server.js
 * Open Postman or any API testing tool and set the Authorization header with the value Token <token> (replace <token> with the copied JWT token).
 * Make a request to http://localhost:5000/products (get all products)
 * If you get 200 OK and {"products": []} as a result, everything was successul
+* To manage the cart, cart items, and orders, you can add or remove items from the cart, update cart items and order products
 * From there you can edit the app based on your needs
 * If you want to seed your products database with some random information, run node products_seed.js in the seeds folder, click "y" to delete all previous products or anything else to just add data without deleting anything
