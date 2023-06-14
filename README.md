@@ -82,4 +82,4 @@ nodemon server.js
 * Make a request to http://localhost:5000/products (get all products)
 * If you get 200 OK and {"products": []} as a result, everything was successul
 * From there you can edit the app based on your needs
-* If you want to seed your product database with some random information, run node post_seed.js in the seeds folder, click "y" to delete all previous recrods or anything else to just add data without deleting anything
+* If you want to seed your products database with some random information, run node products_seed.js in the seeds folder, click "y" to delete all previous products or anything else to just add data without deleting anything
