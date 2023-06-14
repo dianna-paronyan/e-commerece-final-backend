@@ -24,7 +24,7 @@ This project is an eCommerce-backend built with Express.js, PostgreSQL, and Sequ
 ### Database
 * pg - version 8.10.0
 * pg-hstore version 2.3.4
-* 
+
 ## Features
 
 * User registration and login
