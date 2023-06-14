@@ -16,7 +16,6 @@ This project is an eCommerce-backend built with Express.js, PostgreSQL, and Sequ
 * express-validator - version 7.0.1
 * nodemailer - version 6.9.2
 * multer - version 1.4.5-lts.1
-* pg - version 8.10.0
 * sequelize - version 6.31.1
 * sequelize - version 6.6.0
 * stripe - version 12.8.0
