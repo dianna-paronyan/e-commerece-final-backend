@@ -6,7 +6,7 @@ This project is an eCommerce-backend built with Express.js, PostgreSQL, and Sequ
 
 ## Technologies Used
 
-### Server
+#### Server
 * node js - version 18.13.0
 * nodemon - version 2.0.22
 * express - version 4.18.2
@@ -21,7 +21,7 @@ This project is an eCommerce-backend built with Express.js, PostgreSQL, and Sequ
 * sequelize - version 6.6.0
 * stripe - version 12.8.0
 
-### Database
+#### Database
 * pg - version 8.10.0
 * pg-hstore version 2.3.4
 
