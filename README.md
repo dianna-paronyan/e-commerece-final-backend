@@ -30,8 +30,9 @@ This project is an eCommerce API built with Express.js, PostgreSQL, and Sequeliz
 * Authentication via JWT
 * Email confirmation
 * Product management (CRUD operations)
-* Cart management (add/remove/update items)
-* Order management (place order, order history)
+* Cart management (add/remove)
+* CartItem management (add/remove/update items)
+* Order management includes the ability to create an order and view order history.
 * PostgreSQL database with Sequelize ORM
 * Role-based access control (admin and user roles)
 * Seeding
