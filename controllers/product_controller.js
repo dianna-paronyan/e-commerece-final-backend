@@ -3,15 +3,38 @@ const { Category } = require("../models");
 const { Image } = require("../models");
 const fs = require("fs");
 const path = require("path");
-const { validationResult } = require('express-validator');
+const { validationResult } = require("express-validator");
 
+// async function allProducts(req, res) {
+//   try {
+
+//     const products = await Product.findAll({
+//       include: [{ model: Image }, { model: Category }]
+//     });
+
+//     const totalPages = 5;
+//     res.status(201).json(products);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// }
 async function allProducts(req, res) {
   try {
-    const products = await Product.findAll({include: [
-      { model: Image },
-      { model: Category }
-    ]});
-    res.status(201).json(products);
+    const page = req.query.page;
+    const pageSize = req.query.pageSize;
+
+    const offset = (page - 1) * pageSize;
+
+    const products = await Product.findAll({
+      include: [{ model: Image }, { model: Category }],
+      offset,
+      limit: pageSize,
+    });
+
+    const totalCount = await Product.count();
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    res.status(201).json({ products, totalPages });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -20,10 +43,10 @@ async function allProducts(req, res) {
 async function getProduct(req, res) {
   const { id } = req.params;
   try {
-    const product = await Product.findOne({ where: { id }, include: [
-      { model: Image },
-      { model: Category }
-    ] });
+    const product = await Product.findOne({
+      where: { id },
+      include: [{ model: Image }, { model: Category }],
+    });
     res.status(201).json(product);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -58,11 +81,10 @@ async function createProduct(req, res) {
   }
 }
 
-
 async function updateProduct(req, res) {
   const { id } = req.params;
   const { name, price, description, quantity, categoryId } = req.body;
-  const { files } = req; 
+  const { files } = req;
 
   try {
     const images = await Image.findAll({ where: { productId: id } });
