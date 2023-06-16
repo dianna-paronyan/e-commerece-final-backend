@@ -1,18 +1,17 @@
 const { CartItem } = require("../models");
-const { Cart} = require("../models");
-const { Product} = require("../models");
-const {Image} = require("../models")
+const { Cart } = require("../models");
+const { Product } = require("../models");
+const { Image } = require("../models");
 
 async function allCartItems(req, res) {
-    try {
-        const cartItems = await CartItem.findAll({include: [
-          { model: Cart },
-          { model: Product }
-        ]});
-        res.json(cartItems);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
+  try {
+    const cartItems = await CartItem.findAll({
+      include: [{ model: Cart }, { model: Product }],
+    });
+    res.json(cartItems);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 }
 
 async function getCartItem(req, res) {
@@ -24,7 +23,6 @@ async function getCartItem(req, res) {
         where: { cartId: cart.id },
         include: {
           model: Product,
-
         },
       });
 
@@ -33,22 +31,23 @@ async function getCartItem(req, res) {
 
         console.log(product.Image);
         if (product) {
-          const image = await Image.findAll({ where: { productId: product.id } });
+          const image = await Image.findAll({
+            where: { productId: product.id },
+          });
           if (image) {
             product.dataValues.Image = image;
           }
         }
       }
 
-      res.status(201).json({cartItems});
+      res.status(201).json({ cartItems });
     } else {
-      res.status(404).json({ error: 'Cart not found' });
+      res.status(404).json({ error: "Cart not found" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
-
 
 async function updateCartItem(req, res) {
   const { id } = req.params;
@@ -56,37 +55,36 @@ async function updateCartItem(req, res) {
   try {
     const cartItem = await CartItem.findByPk(id);
     if (cartItem) {
-    cartItem.cartId = cartId;
-    cartItem.productId = productId;
-    cartItem.quantity = quantity;
-    await cartItem.save();
-    res.json(cartItem);
+      cartItem.cartId = cartId;
+      cartItem.productId = productId;
+      cartItem.quantity = quantity;
+      await cartItem.save();
+      res.json(cartItem);
     } else {
-    res.status(404).json({ error: 'Cart item not found' });
+      res.status(404).json({ error: "Cart item not found" });
     }
-    } catch (error) {
+  } catch (error) {
     res.status(500).json({ error: error.message });
-    }
+  }
 }
-
 
 async function createCartAndCartItem(req, res) {
   const { userId, productId, quantity } = req.body;
   try {
     let cart = await Cart.findOne({ where: { userId } });
-    if(!cart){
-      cart= await Cart.create({ userId });
+    if (!cart) {
+      cart = await Cart.create({ userId });
     }
     let cartItem = await CartItem.findOne({
-      where: { cartId: cart.id, productId }
+      where: { cartId: cart.id, productId },
     });
-    if(!cartItem){
+    if (!cartItem) {
       cartItem = await CartItem.create({
         cartId: cart.id,
         productId,
-        quantity
+        quantity,
       });
-    }else{
+    } else {
       cartItem.quantity += quantity;
       await cartItem.save();
     }
@@ -97,21 +95,20 @@ async function createCartAndCartItem(req, res) {
   }
 }
 
-
 async function deleteCartItem(req, res) {
   const { id } = req.params;
   try {
-    const cartItem = await CartItem.findOne({where:{productId:id}});
+    const cartItem = await CartItem.findOne({ where: { productId: id } });
     console.log(cartItem);
     if (cartItem) {
-    await CartItem.destroy({where:{productId:id}});
-    res.json({ message: 'Cart item deleted successfully' });
+      await CartItem.destroy({ where: { productId: id } });
+      res.json({ message: "Cart item deleted successfully" });
     } else {
-    res.status(404).json({ error: 'Cart item not found' });
+      res.status(404).json({ error: "Cart item not found" });
     }
-    } catch (error) {
+  } catch (error) {
     res.status(500).json({ error: error.message });
-    }
+  }
 }
 
 async function incrementCartItem(req, res) {
@@ -119,7 +116,7 @@ async function incrementCartItem(req, res) {
   try {
     const cartItem = await CartItem.findOne({ where: { productId: id } });
     if (!cartItem) {
-      return res.status(404).json({ error: 'Cart item not found' });
+      return res.status(404).json({ error: "Cart item not found" });
     }
 
     if (cartItem.quantity > 0) {
@@ -127,8 +124,10 @@ async function incrementCartItem(req, res) {
         { quantity: cartItem.quantity + 1 },
         { where: { productId: id } }
       );
-      const updatedCartItem = await CartItem.findOne({ where: { productId: id } });
-      console.log(updatedCartItem, 'updatedCartItem');
+      const updatedCartItem = await CartItem.findOne({
+        where: { productId: id },
+      });
+      console.log(updatedCartItem, "updatedCartItem");
       res.json({ cartItem: updatedCartItem });
     } else {
       res.json({ cartItem });
@@ -143,7 +142,7 @@ async function decrementCartItem(req, res) {
   try {
     const cartItem = await CartItem.findOne({ where: { productId: id } });
     if (!cartItem) {
-      return res.status(404).json({ error: 'Cart item not found' });
+      return res.status(404).json({ error: "Cart item not found" });
     }
 
     if (cartItem.quantity > 1) {
@@ -151,8 +150,10 @@ async function decrementCartItem(req, res) {
         { quantity: cartItem.quantity - 1 },
         { where: { productId: id } }
       );
-      const updatedCartItem = await CartItem.findOne({ where: { productId: id } });
-      console.log(updatedCartItem, 'updatedCartItem');
+      const updatedCartItem = await CartItem.findOne({
+        where: { productId: id },
+      });
+      console.log(updatedCartItem, "updatedCartItem");
       res.json({ cartItem: updatedCartItem });
     } else {
       res.json({ cartItem });
@@ -162,7 +163,6 @@ async function decrementCartItem(req, res) {
   }
 }
 
-
 module.exports = {
   allCartItems,
   getCartItem,
@@ -170,5 +170,5 @@ module.exports = {
   deleteCartItem,
   createCartAndCartItem,
   incrementCartItem,
-  decrementCartItem
+  decrementCartItem,
 };
