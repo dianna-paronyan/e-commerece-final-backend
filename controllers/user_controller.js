@@ -1,24 +1,29 @@
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { generateAccessToken } = require("../jwt/jwt_generateAccessToken");
 const { sendEmail } = require("../mailers/email_confirmation");
-const { validationResult,body } = require('express-validator');
+const { validationResult, body } = require("express-validator");
 
-const {User} = require("../models");
+const { User } = require("../models");
 
 const SECRET = process.env.SECRET;
 const PORT = process.env.PORT;
 
 const registerValidationRules = [
-  body("userName").isLength({ min: 6 })
-  .withMessage("UserName must be at least 6 characters long").notEmpty().withMessage("UserName can not be empty"),
-  body("email").notEmpty().withMessage('Email is required.').isEmail().withMessage("Invalid email"),
+  body("userName")
+    .isLength({ min: 6 })
+    .withMessage("UserName must be at least 6 characters")
+    .notEmpty()
+    .withMessage("UserName can not be empty"),
+  body("email").isEmail().withMessage("Bad email address"),
   body("password")
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters long")
     .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
-    .withMessage("Password must contain at least one uppercase letter, one lowercase letter, and one number"),
+    .withMessage(
+      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    ),
 ];
 
 async function register(req, res) {
@@ -29,6 +34,10 @@ async function register(req, res) {
     if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array()[0].msg });
     }
+    if (!errors.isEmpty()) {
+      const errorMessage = errors.array()[0].msg;
+      return res.status(400).json({ error: errorMessage });
+    }
     const salt = await bcrypt.genSalt(10);
     const hashed_password = await bcrypt.hash(password, salt);
 
@@ -36,8 +45,8 @@ async function register(req, res) {
     if (emailExists) {
       return res
         .status(400)
-        .json("A User account with this email already exists");
-    } 
+        .json({ error: "A User account with this email already exists" });
+    }
 
     const newUser = {
       userName,
@@ -46,12 +55,12 @@ async function register(req, res) {
     };
     User.create(newUser)
       .then((user) => {
-        const token = generateAccessToken(email, 0,user.id);
+        const token = generateAccessToken(email, 0, user.id);
         sendEmail(email, `http://localhost:${PORT}/verify?token=${token}`);
         res.status(201).json(user);
       })
       .catch(() => {
-        res.status(500).json({ message: '' });
+        res.status(500).json({ message: "" });
       });
   } catch {
     res.status(500).json({ message: "Server Problem" });
@@ -59,8 +68,10 @@ async function register(req, res) {
 }
 
 const loginValidationRules = [
-  body('email').isEmail().withMessage('Invalid email address'),
-  body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
+  body("email").isEmail().withMessage("Invalid email address"),
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters long"),
 ];
 
 async function login(req, res) {
@@ -81,9 +92,9 @@ async function login(req, res) {
           userName: user.userName,
         })
       );
-    } else if(user.is_verified === 0){
+    } else if (user.is_verified === 0) {
       return res.status(400).json("You Need Verification!");
-    }else{
+    } else {
       return res.status(400).json("Invalid password");
     }
   } catch {
@@ -94,28 +105,30 @@ async function login(req, res) {
 async function confirm_email(req, res) {
   try {
     const token = req.query.token;
-    console.log(token,'token')
+    console.log(token, "token");
     const decoded = jwt.verify(token, SECRET);
-    console.log('Decoded:', decoded);
-    await User.
-    update({ is_verified: 1 }, { where: { email: decoded.email } });
-    //  const user = await User.findOne({ where: { email: decoded.email } });
-    // await User.update({ is_verified: 1 } });
+    console.log("Decoded:", decoded);
+    await User.update({ is_verified: 1 }, { where: { email: decoded.email } });
     res.status(200).json({ message: "Verified" });
   } catch (err) {
-    console.log('Token verification error:', err);
     res.status(500).json({ message: err.message });
   }
 }
 
 async function allUsers(req, res) {
-  try{
+  try {
     const users = await User.findAll();
     res.status(201).json(users);
-  }catch(err){
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 }
 
-
-module.exports = { register, login, confirm_email, allUsers, registerValidationRules, loginValidationRules };
+module.exports = {
+  register,
+  login,
+  confirm_email,
+  allUsers,
+  registerValidationRules,
+  loginValidationRules,
+};
