@@ -1,4 +1,6 @@
-const {Category} = require("../models");
+const { Category } = require("../models");
+const { Product } = require("../models");
+const { Image } = require("../models");
 
 async function allCategories(req, res) {
   try {
@@ -9,22 +11,25 @@ async function allCategories(req, res) {
   }
 }
 
-function getCategory(req, res) {
+async function getCategory(req, res) {
   const { id } = req.params;
-  try{
-    const category = Category.findOne({ where: { id } });
+  try {
+    const category = await Category.findOne({
+      where: { id },
+      include: { all: true, nested: true },
+    });
     res.status(201).json(category);
-  }catch(err){
+  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
 
 async function createCategory(req, res) {
   const { name } = req.body;
-  try{
+  try {
     const category = await Category.create({ name });
     res.status(201).json(category);
-  }catch(err){
+  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
@@ -32,20 +37,20 @@ async function createCategory(req, res) {
 async function updateCategory(req, res) {
   const { id } = req.params;
   const { name } = req.body;
-  try{
+  try {
     const category = await Category.update({ name }, { where: { id } });
     res.status(201).json(category);
-  }catch(err){
+  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
 
 async function deleteCategory(req, res) {
   const { id } = req.params;
-  try{
+  try {
     const category = await Category.destroy({ where: { id } });
     res.status(201).json(category);
-  }catch(err){
+  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
