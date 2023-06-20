@@ -21,6 +21,7 @@ This project is an eCommerce-backend built with Express.js, PostgreSQL, and Sequ
 * stripe - version 12.8.0
 
 
+
 # e-commerce-final-frontend
 
 ## Description
@@ -87,6 +88,7 @@ To run the Sunglasses Shop frontend, use the following commands:
 ```
 npm run dev
 ```
+
 
 # e-commerce-admin-frontend
 
