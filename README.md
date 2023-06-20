@@ -20,6 +20,130 @@ This project is an eCommerce-backend built with Express.js, PostgreSQL, and Sequ
 * sequelize - version 6.6.0
 * stripe - version 12.8.0
 
+
+# e-commerce-final-frontend
+
+## Description
+
+This documentation provides an overview and guidelines for the frontend development of the Sunglasses Shop website. The frontend is 
+built using ReactJS, TypeScript, Redux Toolkit, and SCSS. The project is scaffolded with Vite.
+
+
+## Built With
+
+* ReactJS
+* TypeScript
+* Redux Toolkit
+* SCSS
+* React Router DOM
+* Vite
+
+## Technologies Used
+
+* @mui/icons-material - Material-UI icons library.
+* @react-google-maps/api - React library for integrating with Google Maps.
+* axios - Promise-based HTTP client for making API requests.
+* dotenv - Environment variable management library.
+* react-jwt - React library for handling JWT authentication.
+* react-stripe-checkout - React library for integrating with Stripe checkout.
+* sass - CSS preprocessor for styling.
+
+## Features
+
+
+* Home Page: A visually appealing landing page.
+
+* Product Catalog: The website showcases a diverse collection of sunglasses.
+
+* Product Filtering and Sorting by Category: Users can utilize filtering and sorting.
+
+* Product Details: Each sunglasses product page provides comprehensive details about the product, including high-resolution images, product descriptions.
+
+* Shopping Cart: Users can add sunglasses to their shopping cart, review the selected items, update quantities, and remove products if needed. The cart provides a summary of the selected products, along with the total price.
+
+* User Login and Registration: Users can create an account, log in securely, and manage their personal information.
+
+* Secure Checkout: The website integrates with Stripe, a secure payment gateway, to facilitate seamless and secure transactions. Users can enter their payment details, and complete the purchase with confidence.
+
+* Responsive Design: The website is optimized for various devices, including desktops, tablets, and mobile phones. The responsive design ensures that users can enjoy a seamless shopping experience regardless of the device they are using.
+
+### Installation
+
+Clone the repository:
+```
+git clone https://github.com/dianna-paronyan/e-commerce-final-frontend.git
+```
+Change to the project directory:
+```
+cd .. shop
+```
+Install the dependencies:
+```
+npm install
+```
+### Usage
+
+To run the Sunglasses Shop frontend, use the following commands:
+```
+npm run dev
+```
+
+# e-commerce-admin-frontend
+
+## Description
+
+This documentation provides an overview and guidelines for the frontend development of the Sunglasses Shop Admin website. The frontend is built using ReactJS,
+Material UI. 
+The project is scaffolded with Vite.
+
+## Built With
+
+* ReactJS
+* React Router DOM
+* Material UI
+* Vite
+
+## Technologies Used
+
+* React: JavaScript library for building user interfaces.
+* React Router DOM: Library for handling routing in the React application.
+* MUI Icons Material: Material-UI icons library for enhancing the UI.
+* MUI Core: Material-UI core library for UI components.
+* React JWT: React library for handling JWT authentication.
+* Recharts: Library for creating responsive and customizable charts in React applications.
+* Dotenv: Environment variable management library.
+* Vite: Fast and minimalist build tool for modern web development.
+
+## Features
+
+* Login and Authentication: Secure login functionality for administrators.
+* Dashboard: A centralized dashboard displaying key metrics and important information.
+* Product Management: CRUD operations for managing sunglasses products.
+* Order Management: View and manage orders.
+* User Management: Manage user accounts and permissions.
+* Integration with Material-UI Icons: Enhance the UI with icons from the Material-UI icons library.
+
+### Installation
+
+Clone the repository:
+```
+git clone https://github.com/dianna-paronyan/e-commerce-admin-frontend.git
+```
+Change to the project directory:
+```
+cd .. admin
+```
+Install the dependencies:
+```
+npm install
+```
+### Usage
+
+To run the Sunglasses Shop frontend, use the following commands:
+```
+npm run dev
+```
+
 #### Database
 * pg - version 8.10.0
 * pg-hstore version 2.3.4
