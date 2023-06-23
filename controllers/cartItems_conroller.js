@@ -49,24 +49,6 @@ async function getCartItem(req, res) {
   }
 }
 
-async function updateCartItem(req, res) {
-  const { id } = req.params;
-  const { cartId, productId, quantity } = req.body;
-  try {
-    const cartItem = await CartItem.findByPk(id);
-    if (cartItem) {
-      cartItem.cartId = cartId;
-      cartItem.productId = productId;
-      cartItem.quantity = quantity;
-      await cartItem.save();
-      res.json(cartItem);
-    } else {
-      res.status(404).json({ error: "Cart item not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
 
 async function createCartAndCartItem(req, res) {
   const { userId, productId, quantity } = req.body;
@@ -166,7 +148,6 @@ async function decrementCartItem(req, res) {
 module.exports = {
   allCartItems,
   getCartItem,
-  updateCartItem,
   deleteCartItem,
   createCartAndCartItem,
   incrementCartItem,
