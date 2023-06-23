@@ -1,6 +1,4 @@
 const { Category } = require("../models");
-const { Product } = require("../models");
-const { Image } = require("../models");
 
 async function allCategories(req, res) {
   try {
