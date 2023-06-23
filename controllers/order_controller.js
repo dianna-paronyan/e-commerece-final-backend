@@ -45,7 +45,7 @@ async function createOrder(req, res) {
 
 async function getAllOrders(req, res) {
   try {
-    const orders = await Order.findAll();
+    const orders = await Order.findAll({ include: { all: true, nested: true }});
     res.json(orders);
   } catch (error) {
     console.error(error);
