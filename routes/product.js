@@ -6,6 +6,7 @@ const { productValidationRules } = require('../validations/product_validation');
 
 function product_routes(app){  
     app.get('/products',  products_controller.allProducts);
+    app.get('/products/page',  products_controller.productsByPage);
     app.get('/product/:id',  products_controller.getProduct);
     app.post('/createProduct', admin_authenticate,  upload.array('image'), productValidationRules, products_controller.createProduct);
     app.put('/updateProduct/:id', admin_authenticate, upload.array('image'),  products_controller.updateProduct);
