@@ -5,20 +5,18 @@ const fs = require("fs");
 const path = require("path");
 const { validationResult } = require("express-validator");
 
-// async function allProducts(req, res) {
-//   try {
-
-//     const products = await Product.findAll({
-//       include: [{ model: Image }, { model: Category }]
-//     });
-
-//     const totalPages = 5;
-//     res.status(201).json(products);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// }
 async function allProducts(req, res) {
+  try {
+
+    const products = await Product.findAll({
+      include: [{ model: Image }, { model: Category }]
+    });
+    res.status(201).json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+async function productsByPage(req, res) {
   try {
     const page = req.query.page;
     const pageSize = req.query.pageSize;
@@ -165,6 +163,7 @@ async function deleteProduct(req, res) {
 
 module.exports = {
   allProducts,
+  productsByPage,
   getProduct,
   createProduct,
   updateProduct,
