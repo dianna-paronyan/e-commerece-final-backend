@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const { generateAccessToken } = require("../jwt/jwt_generateAccessToken");
 const { sendEmail } = require("../mailers/email_confirmation");
 const { validationResult, body } = require("express-validator");
+require("dotenv").config();
 
 const { User } = require("../models");
 
@@ -55,7 +55,7 @@ async function register(req, res) {
     };
     User.create(newUser)
       .then((user) => {
-        const token = generateAccessToken(email, 0, user.id);
+        const token = generateAccessToken(email, 0, user.id, user.is_verified);
         sendEmail(email, `http://localhost:${PORT}/verify?token=${token}`);
         res.status(201).json(user);
       })
@@ -83,13 +83,19 @@ async function login(req, res) {
     }
     const validPassword = await bcrypt.compare(password, user.password);
     if (validPassword) {
-      const token = generateAccessToken(email, user.role, user.id);
+      const token = generateAccessToken(
+        email,
+        user.role,
+        user.id,
+        user.is_verified
+      );
       res.send(
         JSON.stringify({
           status: "Logged in",
           jwt: token,
           role: user.role,
           userName: user.userName,
+          is_verified: user.is_verified,
         })
       );
     } else if (user.is_verified === 0) {
