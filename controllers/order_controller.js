@@ -4,44 +4,6 @@ const { Product } = require("../models");
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = require("stripe")(stripeSecretKey);
 
-async function createOrder(req, res) {
-  try {
-    const { cartId, total, products } = req.body;
-
-    const order = await Order.create({
-      cartId,
-      total,
-      products,
-    });
-
-    const cartItems = await CartItem.findAll({
-      where: { productId: products.map((p) => p.productId) },
-    });
-
-    for (const cartItem of cartItems) {
-      const matchingProduct = await Product.findByPk(cartItem.productId);
-      const { quantity } = cartItem;
-
-      let updatedQuantity = matchingProduct.quantity - quantity;
-
-      if (updatedQuantity < 0) {
-        updatedQuantity = 0;
-      }
-
-      await Product.update(
-        { quantity: updatedQuantity },
-        { where: { id: matchingProduct.id } }
-      );
-    }
-
-    await CartItem.destroy({ where: { cartId } });
-
-    res.status(201).json(order);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-}
 
 async function getAllOrders(req, res) {
   try {
@@ -56,7 +18,7 @@ async function getAllOrders(req, res) {
 async function getOrderById(req, res) {
   const { id } = req.params;
   try {
-    const order = await Order.findOne({ where: { cartId: id } });
+    const order = await Order.findAll({ where: { cartId: id } });
     if (order) {
       res.json(order);
     } else {
@@ -122,7 +84,6 @@ async function orederPayment(req, res) {
 }
 
 module.exports = {
-  createOrder,
   getAllOrders,
   getOrderById,
   orederPayment,
